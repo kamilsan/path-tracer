@@ -14,7 +14,7 @@
 
 int main()
 {
-  int width = 1366, height = 768;
+  int width = 1920, height = 1080;
   char *pixels = nullptr;
 
   Renderer renderer(width, height);

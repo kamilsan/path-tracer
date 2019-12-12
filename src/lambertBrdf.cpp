@@ -4,12 +4,12 @@
 #include "vector.hpp"
 #include "core.hpp"
 
-float LambertBRDF::f(const Vector& wo, const Vector& wi) const
+float LambertBRDF::f(const Vector&, const Vector&) const
 {
   return diffuseFactor*M_1_PI;
 }
 
-float LambertBRDF::sample_f(const Vector& wo, Vector& wi, RNG& rng, float& pdf) const
+float LambertBRDF::sample_f(const Vector&, Vector& wi, RNG& rng, float& pdf) const
 {
   float sinT = sqrtf(rng.get());
   float cosT = sqrtf(1 - sinT * sinT);

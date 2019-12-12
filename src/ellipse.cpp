@@ -31,7 +31,7 @@ float Ellipse::intersect(const Ray& ray) const
   return t;
 }
 
-Vector Ellipse::getNormalAt(const Vector& point) const
+Vector Ellipse::getNormalAt(const Vector&) const
 {
   return m_normal;
 }

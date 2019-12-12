@@ -9,12 +9,12 @@ float Plane::intersect(const Ray& ray) const
   return -(ray.origin - point).dot(this->normal) / don;
 }
 
-Vector Plane::getNormalAt(const Vector& point) const
+Vector Plane::getNormalAt(const Vector&) const
 {
   return normal;
 }
 
-void Plane::getUVAt(const Vector& point, float& u, float& v) const
+void Plane::getUVAt(const Vector&, float& u, float& v) const
 {
   u = 0;
   v = 0;

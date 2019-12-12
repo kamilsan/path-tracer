@@ -9,6 +9,6 @@ public:
   LambertBRDF(): diffuseFactor(0.2) {}
   LambertBRDF(float diffuseFactor): diffuseFactor(diffuseFactor) {}
 
-  float f(const Vector& wo, const Vector& wi) const override;
-  float sample_f(const Vector& wo, Vector& wi, RNG& rng, float& pdf) const override;
+  float f(const Vector&, const Vector&) const override;
+  float sample_f(const Vector&, Vector& wi, RNG& rng, float& pdf) const override;
 };

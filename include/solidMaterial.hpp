@@ -19,8 +19,8 @@ public:
 
   ~SolidMaterial();
 
-  Vector getColor(float u, float v) const override;
-  Vector getEmittance(float u, float v) const override;
+  Vector getColor(float, float) const override;
+  Vector getEmittance(float, float) const override;
   bool isEmissive() const override;
   BRDF* getBRDF() const override;
 };

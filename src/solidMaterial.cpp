@@ -21,7 +21,7 @@ SolidMaterial::~SolidMaterial()
   delete brdf;
 }
 
-Vector SolidMaterial::getColor(float u, float v) const { return color; }
-Vector SolidMaterial::getEmittance(float u, float v) const { return emittance; }
+Vector SolidMaterial::getColor(float, float) const { return color; }
+Vector SolidMaterial::getEmittance(float, float) const { return emittance; }
 bool SolidMaterial::isEmissive() const { return emittance.lengthSq() > 0.1; }
 BRDF* SolidMaterial::getBRDF() const { return brdf; }

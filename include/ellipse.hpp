@@ -64,7 +64,7 @@ public:
   void setSemiBitangent(float semiBitangent);
 
   float intersect(const Ray& ray) const override;
-  Vector getNormalAt(const Vector& point) const override;
+  Vector getNormalAt(const Vector&) const override;
   void getUVAt(const Vector& point, float& u, float& v) const override;
   bool isFinite() const override { return true; }
   Vector getSample(RNG& rng) const override;

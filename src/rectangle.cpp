@@ -29,7 +29,7 @@ float Rectangle::intersect(const Ray& ray) const
   return t;
 }
 
-Vector Rectangle::getNormalAt(const Vector& point) const
+Vector Rectangle::getNormalAt(const Vector&) const
 {
   return m_normal;
 }

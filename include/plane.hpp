@@ -17,11 +17,11 @@ public:
   Plane(const Vector& pt, const Vector& nor, std::shared_ptr<BaseMaterial> mat): Object(mat), point(pt), normal(nor) {}
 
   float intersect(const Ray& ray) const override;
-  Vector getNormalAt(const Vector& point) const override;
-  void getUVAt(const Vector& point, float& u, float& v) const override;
+  Vector getNormalAt(const Vector&) const override;
+  void getUVAt(const Vector&, float& u, float& v) const override;
   bool isFinite() const override { return false; }
-  Vector getSample(RNG& rng) const override { return Vector(0,0,0); }
-  void getSamples(RNG& rng, int s1, int s2, Vector* samples) const override
+  Vector getSample(RNG&) const override { return Vector(0,0,0); }
+  void getSamples(RNG&, int s1, int s2, Vector* samples) const override
   {
     for(int i = 0; i < s1*s2; ++i)
     {

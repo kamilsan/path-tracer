@@ -9,7 +9,6 @@ Texture::Texture(const Texture& texture): m_width(texture.m_width), m_height(tex
 {
   if(m_valid)
   {
-    //delete[] m_data;
     m_data = new float[m_len];
     std::memcpy(m_data, texture.m_data, m_len*sizeof(float));
   }
@@ -18,6 +17,7 @@ Texture::Texture(const Texture& texture): m_width(texture.m_width), m_height(tex
 Texture::Texture(int width, int height, const float *data, bool flip_v): m_width(width), m_height(height), m_flip_v(flip_v)
 {
   m_len = 3*width*height;
+  m_data = new float[m_len];
   std::memcpy(m_data, data, m_len*sizeof(float));
   m_valid = true;
 }

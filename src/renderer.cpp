@@ -55,13 +55,13 @@ void Renderer::render(const Scene& scene, const Camera& camera, char* &pixels)
     }
   }
 
-  Lavg = std::exp(Lavg/len);
+  Lavg = std::exp(3.0*Lavg/len);
   float L, Lfactor = a/Lavg;
   Lmax *= Lmax;
   for(i = 0; i < len; ++i)
   {
-    L = data[i]*Lfactor;
-    L *= (1 + L/Lmax)/(1.0+L);
+    L = std::min(1.0f, std::max(0.0f, data[i]));//*Lfactor;
+    //L *= (1 + L/Lmax)/(1.0+L);
     sRGBEncode(L);
     //+0.5 -- better approx. (lower quantization error)
     pixels[i] = 255*L + 0.5;

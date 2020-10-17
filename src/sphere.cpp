@@ -42,7 +42,7 @@ Vector Sphere::getNormalAt(const Vector& point) const
 void Sphere::getUVAt(const Vector& point, float& u, float& v) const
 {
   Vector rp = point - center;
-  float theta = acos(rp.y/m_radius);
+  float theta = acos(std::max(-1.0f, std::min(1.0f, rp.y/m_radius)));
   float phi = atan2(rp.z, rp.x);
   u = phi * 0.5 * M_1_PI + 0.5;
   v = theta * M_1_PI;

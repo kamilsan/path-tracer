@@ -85,6 +85,26 @@ void sRGBDecode(Vector& color)
   sRGBDecode(color.z);
 }
 
+Vector toXYZ(const Vector& color)
+{
+  Vector result;
+  result.x = 0.4123865632529917*color.x + 0.35759149092062537*color.y + 0.18045049120356368*color.z;
+  result.y = 0.21263682167732384*color.x + 0.7151829818412507*color.y + 0.07218019648142547*color.z;
+  result.z = 0.019330620152483987*color.z + 0.11919716364020845*color.y + 0.9503725870054354*color.z;
+
+  return result;
+}
+
+Vector fromXYZ(const Vector& color)
+{
+  Vector result;
+  result.x = 3.2410032329763587*color.x - 1.5373989694887855*color.y - 0.4986158819963629*color.z;
+  result.y = -0.9692242522025166*color.x + 1.875929983695176*color.y + 0.041554226340084724*color.z;
+  result.z = 0.055639419851975444*color.z - 0.20401120612390997*color.y + 1.0571489771875335*color.z;
+
+  return result;
+}
+
 void createOrthogonalSystem(const Vector& normal, Vector& tangent, Vector& bitangent)
 {
   float sign = copysignf(1.0f, normal.z);

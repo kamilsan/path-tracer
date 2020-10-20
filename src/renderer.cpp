@@ -14,7 +14,7 @@ void Renderer::render(const Scene& scene, const Camera& camera, char* &pixels)
 
   int len = 3*m_width*m_height;
   pixels = new char[len];
-  float *data = new float[len];
+  Vector* data = new Vector[m_width*m_height];
 
   std::vector<std::shared_ptr<Object>> objects = scene.getObjects();
   std::vector<std::shared_ptr<Object>> areaLights;
@@ -31,8 +31,8 @@ void Renderer::render(const Scene& scene, const Camera& camera, char* &pixels)
   int s1 = std::sqrt(LIGHT_SAMPLES);
   int s2 = LIGHT_SAMPLES/s1;
   //Tone mapping
-  float luma;
-  float Lavg = 0, Lmax = 0, a = 0.21;
+  Vector xyz;
+  float Lavg = 0, a = 0.18;
   for(unsigned int y = 0; y < m_height; ++y)
   {
     for(unsigned int x = 0; x < m_width; ++x)
@@ -42,29 +42,43 @@ void Renderer::render(const Scene& scene, const Camera& camera, char* &pixels)
         color += sample(x, y, scene, areaLights, camera, s1, s2);
       color *= samples_factor;
 
-      luma = color.dot(Vector(0.2126, 0.7152, 0.0722));
-      Lavg += std::log(luma + 0.000001);
-      if(luma > Lmax) Lmax = luma;
+      xyz = toXYZ(color);
+      float Y = xyz.y;
+      float factor = 1.0f / (xyz.x + xyz.y + xyz.z);
+      Lavg += std::log(Y + 0.000001);
 
-      i = 3*(y * m_width + x);
-      data[i] = color.x;
-      data[i+1] = color.y;
-      data[i+2] = color.z;
+      xyz *= factor;
+      xyz.z = Y;
 
-      if(i % 500 == 0) std::cout << 100.0 * i / len << "%\n";
+      i = y * m_width + x;
+      data[i] = xyz;
+
+      if(i % 500 == 0) std::cout << 300.0 * i / len << "%\n";
     }
   }
 
   Lavg = std::exp(3.0*Lavg/len);
   float L, Lfactor = a/Lavg;
-  Lmax *= Lmax;
-  for(i = 0; i < len; ++i)
+  for(unsigned int y = 0; y < m_height; ++y)
   {
-    L = std::min(1.0f, std::max(0.0f, data[i]));//*Lfactor;
-    //L *= (1 + L/Lmax)/(1.0+L);
-    sRGBEncode(L);
-    //+0.5 -- better approx. (lower quantization error)
-    pixels[i] = 255*L + 0.5;
+    for(unsigned int x = 0; x < m_width; ++x)
+    {
+      i = y * m_width + x;
+      L = data[i].z * Lfactor;
+      L = L / (1.0f + L);
+
+      const float X = L/data[i].y * data[i].x;
+      const float Y = L;
+      const float Z = L/data[i].y * (1.0f - data[i].x - data[i].y);
+
+      color = fromXYZ({X, Y, Z});
+
+      sRGBEncode(color);
+      //+0.5 -- better approx. (lower quantization error)
+      pixels[3*i]   =   (unsigned char)(std::min(255.0f, std::max(0.0f, 255*color.x)) + 0.5f);
+      pixels[3*i+1] =   (unsigned char)(std::min(255.0f, std::max(0.0f, 255*color.y)) + 0.5f);
+      pixels[3*i+2] =   (unsigned char)(std::min(255.0f, std::max(0.0f, 255*color.z)) + 0.5f);
+    }
   }
 }
 

@@ -14,7 +14,7 @@
 
 int main()
 {
-  int width = 1920, height = 1080;
+  int width = 600, height = 600;
   char *pixels = nullptr;
 
   Renderer renderer(width, height);
@@ -30,7 +30,7 @@ int main()
   std::shared_ptr<BaseMaterial> wallMaterial2 = std::make_shared<TexturedMaterial>(wallTexture2, 0.81f);
   std::shared_ptr<BaseMaterial> floorMaterial = std::make_shared<SolidMaterial>(Vector(1.0f, 1.0f, 1.0f), 0.81f);
   std::shared_ptr<BaseMaterial> floorMaterial2 = std::make_shared<TexturedMaterial>(floorTexture, 0.81f);
-  std::shared_ptr<BaseMaterial> ceilingMaterial = std::make_shared<TexturedMaterial>(floorTexture, 0.0f, wallTexture, 0.9);
+  std::shared_ptr<BaseMaterial> ceilingMaterial = std::make_shared<TexturedMaterial>(floorTexture, 0.0f, wallTexture2, 0.6);
   std::shared_ptr<BaseMaterial> lampMaterial = std::make_shared<SolidMaterial>(Vector(1, 1, 1), 0.1, Vector(5, 5, 5));
 
   scene.addObject(std::make_shared<Rectangle>(Vector(-2, -1, -1), Vector(1, 0, 0), Vector(0, 0, 1), Vector(0, 1, 0), 3, 3, wallMaterial1));
@@ -77,7 +77,6 @@ int main()
     1.4f, 0.4f,
     floorMaterial
   ));
-
   scene.addObject(std::make_shared<Rectangle>(
     Vector(-0.6f, 1.849999f, 0.9f),
     Vector(0, -1, 0),

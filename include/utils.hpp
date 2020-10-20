@@ -13,5 +13,8 @@ void sRGBDecode(float& c);
 void sRGBEncode(Vector& color);
 void sRGBDecode(Vector& color);
 
+Vector toXYZ(const Vector& color);
+Vector fromXYZ(const Vector& color);
+
 //Method by Tom Duff et al.
 void createOrthogonalSystem(const Vector& normal, Vector& tangent, Vector& bitangent);
